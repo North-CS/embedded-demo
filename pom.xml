@@ -10,7 +10,7 @@
     </parent>
     <groupId>io.dataease</groupId>
     <artifactId>embedded-demo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>embedded-demo</name>
     <description>embedded-demo</description>
     <properties>
