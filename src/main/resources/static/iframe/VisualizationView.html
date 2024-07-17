@@ -6,50 +6,58 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>flushbonading</title>
-
-  <script crossorigin  type="module" th:src="@{{domain}js/div_import_0.0.0-dataease.js(domain=${vo.domain})}"></script>
-
 </head>
 <style>
-  #dataease-container {
+  #de-view-container {
     display: inline-flex;
-    width: 1000px;
-    height: 800px;
+    width: 500px;
+    height: 500px;
     overflow: auto;
+  }
+  .view-iframe {
+    width: 100%;
+    border: 0;
+    height: calc(100% - 5px);
   }
 </style>
 <body>
-
-<div id="dataease-container">
-</div>
-
+  <iframe height="600" width="1000" id="de-view-iframe" src="" ></iframe>
 </body>
 <script th:inline="javascript" type="module">
   window.onload = () => {
     var xhr = new XMLHttpRequest();
     var account = [[${vo.account}]]
     var url = `/token/${account}`
+    var busiFlag = 'dataV'
     var dvId = [[${vo.screenId}]]
-    var opt = "create" //固定写法
     var domain = [[${vo.domain}]]
+    var type = 'Dashboard'
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
         const token = xhr.response
-        const dataease = new DataEaseBi('VisualizationEditor', {
-          baseUrl: domain,
-          token: token,
+        let url = domain + "#/chart-view"
+        const params = {
+          busiFlag: busiFlag,
           dvId: dvId,
-          opt: opt
+          type: type,
+          embeddedToken: token
+        }
+        const iframe = document.getElementById("de-view-iframe")
+        iframe.src = url
+
+        window.addEventListener('message', event => {
+          if (event.data?.msgOrigin !== 'de-fit2cloud') {
+            return
+          }
+          params['de-embedded'] = true
+          var contentWindow = iframe.contentWindow;
+          contentWindow.postMessage(params, url)
         })
-        dataease.initialize({container: '#dataease-container'})
       }
     }
     xhr.open('get', url, true);
     xhr.send();
   }
-
-
-
 </script>
 
 </html>

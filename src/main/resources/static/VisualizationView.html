@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>adc</title>
   <script crossorigin  type="module" th:src="@{{domain}js/div_import_0.0.0-dataease.js(domain=${vo.domain})}"></script>
+  <style>
+    #app {
+      height: 800px;
+      width: 1000px;
+    }
+  </style>
 </head>
 <style>
   .dashboard-preview {
@@ -27,13 +33,13 @@
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
         const token = xhr.response
-        DataEaseBi.create('Dashboard', {
+        const dataease = new DataEaseBi('Dashboard', {
           baseUrl: domain,
           token: token,
           dvId: dvId,
           busiFlag: busiFlag
         })
-        DataEaseBi.initialize({ container: '#app' })
+        dataease.initialize({ container: '#app' })
       }
     }
     xhr.open('get', url, true);
