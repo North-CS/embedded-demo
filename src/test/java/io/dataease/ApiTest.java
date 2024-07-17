@@ -15,12 +15,12 @@ import java.util.UUID;
 
 public class ApiTest {
 
-    static String accessKey = "y4z835cnqoioub54";
-    static String secretKey = "zvvh6bmfxlftmsbs";
+    static String accessKey = "xxx";
+    static String secretKey = "xxx";
 
     public static void main(String[] args) {
         try {
-            URL url = new URL("https://live.fit2cloud.com/de2api/dataVisualization/tree");
+            URL url = new URL("https://xxx.fit2cloud.com/de2api/dataVisualization/tree");
             String signature = aesEncrypt(accessKey + "|" + UUID.randomUUID() + "|" + System.currentTimeMillis(), secretKey, accessKey);
             Algorithm algorithm = Algorithm.HMAC256(secretKey);
             JWTCreator.Builder builder = JWT.create();
